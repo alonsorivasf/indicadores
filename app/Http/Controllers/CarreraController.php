@@ -41,29 +41,182 @@ class CarreraController extends Controller
     //Número de periodos de inscripción a primer ingreso que ofreción durante el ciclo ANTERIOR
     public function carreraII1($campus, $carrera)
     {
-        //
+        return "Aún no se cuenta con este dato.";
     }
     //Número de alumnos de primer ingreso a la carrera, del ciclo escolar ANTERIOR
     public function carreraII2($campus, $carrera)
     {
-        //
+        $sql1="SELECT
+        count(IF(sexo = 'M', 1, NULL)) Hombres,
+        count(IF(sexo = 'F', 1, NULL)) Mujeres,
+        count(matricula) as Total
+        from nicicloanterior
+        where campus like ? and descPrograma like ?
+        and tipoIngreso like 'Nuevo Ingreso'";
+
+        $consulta = DB::select($sql1, array($campus, $carrera));
+
+        if($consulta == null){
+            $NICicloAnterior = [
+                'Hombres' => 0,
+                'Mujeres' => 0,
+                'Total' => 0,
+            ];
+        }else{
+            $NICicloAnterior = $consulta;
+        }
+        return $NICicloAnterior;
+
     }
 
     //III-EGRESADOS Y TITULADOS
     //Número de EGRESADOS en el ciclo escolar ANTERIOR
     public function carreraIII1($campus, $carrera)
     {
-        //
+        $sql1="SELECT
+        count(IF(sexo = 'M', 1, NULL)) Hombres,
+        count(IF(sexo = 'F', 1, NULL)) Mujeres,
+        count(matricula) as Total,
+        count(IF(LENGTH(descDiscapacidad) > 1, 1, NULL)) Discapacidad,
+        count(IF(LENGTH(descEtnia) > 1, 1, NULL)) Etnia
+        from egresados
+        where campus like ? and descPrograma like ?";
+
+        $consulta = DB::select($sql1, array($campus, $carrera));
+
+        if($consulta == null){
+            $Egresados = [
+                'Hombres' => 0,
+                'Mujeres' => 0,
+                'Total' => 0,
+                'Discapacidad' => 0,
+                'Etnia' => 0,
+            ];
+        }else{
+            $Egresados = $consulta;
+        }
+        return $Egresados;
     }
     //Número de TITULADOS en el ciclo escolar ANTERIOR
     public function carreraIII2($campus, $carrera)
     {
-        //
+        $sql1="SELECT
+        count(IF(sexo = 'M', 1, NULL)) Hombres,
+        count(IF(sexo = 'F', 1, NULL)) Mujeres,
+        count(matricula) as Total,
+        count(IF(LENGTH(descDiscapacidad) > 1, 1, NULL)) Discapacidad,
+        count(IF(LENGTH(descEtnia) > 1, 1, NULL)) Etnia
+        from titulados
+        where campus like ? and descPrograma like ?";
+
+        $consulta = DB::select($sql1, array($campus, $carrera));
+
+        if($consulta == null){
+            $Titulados = [
+                'Hombres' => 0,
+                'Mujeres' => 0,
+                'Total' => 0,
+                'Discapacidad' => 0,
+                'Etnia' => 0,
+            ];
+        }else{
+            $Titulados = $consulta;
+        }
+        return $Titulados;
     }
     //Número de Egresados y Titulados en el ciclo escolar ANTERIOR por Sexo y Edad
     public function carreraIII3($campus, $carrera)
     {
-        //
+        //Para traer hombres y mujeres de EGRESADOS
+        $sql1="SELECT
+        rangoEdad,
+        count(IF(sexo = 'M', 1, NULL)) Hombres,
+        count(IF(sexo = 'F', 1, NULL)) Mujeres
+        from egresados
+        where campus LIKE ? and descPrograma LIKE ? and rangoEdad like ? group by rangoEdad";
+
+        //Para traer hombres y mujeres de TITULADOS
+        $sql2="SELECT
+        rangoEdad,
+        count(IF(sexo = 'M', 1, NULL)) Hombres,
+        count(IF(sexo = 'F', 1, NULL)) Mujeres
+        from titulados
+        where campus LIKE ? and descPrograma LIKE ? and rangoEdad like ? group by rangoEdad";
+
+        //Se define arreglo de grados para iterar consulta
+        $edades = array(
+            '21 años o menos',
+            '22 años',
+            '23 años',
+            '24 años',
+            '25 años',
+            '26 a 29 años',
+            '30 años o más',
+        );
+
+         //Iteración de consulta por rango de edad EGRESO, si no hay datos se agrega la edad en ceros
+         $hombres = 0;
+         $mujeres = 0;
+         foreach ($edades as $edad) {
+             $consultaEdad = DB::select($sql1, array($campus, $carrera, $edad));
+             if(empty($consultaEdad)){
+                 $Egresados[] = [
+                     'rangoEdad' => $edad,
+                     'Hombres' => 0,
+                     'Mujeres'=> 0,
+                     'Total'=> 0,
+                 ];
+             }else{
+                 $Egresados[] = [
+                     'rangoEdad' => $consultaEdad[0]->rangoEdad,
+                     'Hombres' => $consultaEdad[0]->Hombres,
+                     'Mujeres'=> $consultaEdad[0]->Mujeres,
+                     'Total' => $consultaEdad[0]->Hombres + $consultaEdad[0]->Mujeres,
+                 ];
+                 $hombres += $consultaEdad[0]->Hombres;
+                 $mujeres += $consultaEdad[0]->Mujeres;
+             }
+         }
+         $Egresados[] = [
+             'rangoEdad' => 'Total',
+             'Hombres' => $hombres,
+             'Mujeres'=> $mujeres,
+             'Total' => $hombres + $mujeres,
+         ];
+
+
+        //Iteración de consulta por rango de edad TITULACIÓN, si no hay datos se agrega la edad en ceros
+        $hombres = 0;
+        $mujeres = 0;
+        foreach ($edades as $edad) {
+            $consultaEdad = DB::select($sql2, array($campus, $carrera, $edad));
+            if(empty($consultaEdad)){
+                $Titulados[] = [
+                    'rangoEdad' => $edad,
+                    'Hombres' => 0,
+                    'Mujeres'=> 0,
+                    'Total'=> 0,
+                ];
+            }else{
+                $Titulados[] = [
+                    'rangoEdad' => $consultaEdad[0]->rangoEdad,
+                    'Hombres' => $consultaEdad[0]->Hombres,
+                    'Mujeres'=> $consultaEdad[0]->Mujeres,
+                    'Total' => $consultaEdad[0]->Hombres + $consultaEdad[0]->Mujeres,
+                ];
+                $hombres += $consultaEdad[0]->Hombres;
+                $mujeres += $consultaEdad[0]->Mujeres;
+            }
+        }
+        $Titulados[] = [
+            'rangoEdad' => 'Total',
+            'Hombres' => $hombres,
+            'Mujeres'=> $mujeres,
+            'Total' => $hombres + $mujeres,
+        ];
+
+         return [$Egresados, $Titulados];
+
     }
 
     //IV-MOVILIDAD DE ALUMNOS
@@ -138,8 +291,26 @@ class CarreraController extends Controller
     //Número de solicitudes recibidas para ingresar a la carrera por sexo, discapacidad y lenguas
     public function carreraV3($campus, $carrera)
     {
-        //falta información de aspirantes
-        $solicitudes[]   = [
+        //Para el periodo 2020-2 la información proporcionada por DGSA no contaba con información de discapacidad y lenguas indígenas
+        $sql1="SELECT
+        count(IF(sexo = 'M', 1, NULL)) Hombres,
+        count(IF(sexo = 'F', 1, NULL)) Mujeres,
+        count(folio) as Total
+        from aspirantes
+        where campus LIKE ? and descPrograma LIKE ?";
+
+        $sql2="SELECT
+        count(IF(tipoDiscapacidad!='0', 1, NULL)) Discapacidad,
+        count(IF(descBeca = 'COMPARTIR', 1, NULL)) LenguasIndigenas
+        from matricula911
+        where campus LIKE ? and descPrograma LIKE ?
+        and tipoIngreso='Nuevo Ingreso'";
+
+        $consultaAspirantes = DB::select($sql1, array($campus, $carrera.'%'));
+        $consultaDiscapacidadLenguas = DB::select($sql2, array($campus, $carrera.'%'));
+
+        //Se inicializa el arreglo en ceros
+        $solicitudes[0] = [
             'Hombres' => 0,
             'Mujeres' => 0,
             'Total' => 0,
@@ -147,7 +318,16 @@ class CarreraController extends Controller
             'LenguasIndigenas' => 0,
         ];
 
+        if($consultaAspirantes != null){
+            $solicitudes[0]['Hombres'] = $consultaAspirantes[0]->Hombres;
+            $solicitudes[0]['Mujeres'] = $consultaAspirantes[0]->Mujeres;
+            $solicitudes[0]['Total'] = $consultaAspirantes[0]->Total;
 
+        }
+        if($consultaDiscapacidadLenguas != null){
+            $solicitudes[0]['Discapacidad'] = $consultaDiscapacidadLenguas[0]->Discapacidad;
+            $solicitudes[0]['LenguasIndigenas'] = $consultaDiscapacidadLenguas[0]->LenguasIndigenas;
+        }
         return $solicitudes;
     }
     //Número de alumnos de primer ingreso a la carrera en el ciclo ACTUAL por sexo, discapacidad y lenguas
@@ -351,7 +531,7 @@ class CarreraController extends Controller
         foreach ($grados as $grado) {
             $consultaGrado = DB::select($sql1, array($campus, $carrera, $grado));
             if($consultaGrado == null){
-                $gradoAvance[] = [
+                $gradoAvance[] = [[
                     'gradoAvance' => $grado,
                     'Hombres' => 0,
                     'Mujeres'=> 0,
@@ -359,7 +539,7 @@ class CarreraController extends Controller
                     'Con_Discapacidad' => 0,
                     'Nacidos_fuera_de_México' => 0,
                     'Lenguas_Indigenas' => 0,
-                ];
+                ]];
             }else{
                 $gradoAvance[] = $consultaGrado;
             }
@@ -368,7 +548,7 @@ class CarreraController extends Controller
         //Consulta para sumarizar el total, si no existe en la carrera, se incluye total en ceros
         $consultaGrado = DB::select($sql2, array($campus, $carrera));
         if($consultaGrado == null){
-            $gradoAvance[] = [
+            $gradoAvance[] = [[
                 'gradoAvance' => 'TOTAL',
                 'Hombres' => 0,
                 'Mujeres' => 0,
@@ -376,7 +556,7 @@ class CarreraController extends Controller
                 'Con_Discapacidad' => 0,
                 'Nacidos_fuera_de_México' => 0,
                 'Lenguas_Indigenas' => 0,
-            ];
+            ]];
         }else{
             $gradoAvance[] = $consultaGrado;
         }

@@ -1,6 +1,7 @@
 <template>
-        <div class="row justify-content-center">
-            <div class="col-xl-12">
+        <div class="row justify-content-center" v-if="mostrar==1">
+            <md-button class="md-dense md-raised md-primary" @click="print"> <md-icon>print</md-icon> Imprimir Sección</md-button>
+            <div class="col-xl-12" id="imprimir">
                 <div class="card">
                     <div class="card-header"><b>V. ALUMNOS DE PRIMER INGRESO</b> <br>
                         <b>Campus: </b>{{campus}} <br><b>Programa:</b> {{carrera}}
@@ -11,9 +12,9 @@
                         <table class="tg">
                             <thead>
                             <tr>
-                                <th class="tg-baqh">Año</th>
-                                <th class="tg-baqh">Mes</th>
-                                <th class="tg-baqh">Día</th>
+                                <th class="tg-1x4j">Año</th>
+                                <th class="tg-1x4j">Mes</th>
+                                <th class="tg-1x4j">Día</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -29,7 +30,7 @@
                         <table class="tg">
                             <thead>
                             <tr>
-                                <th class="tg-baqh">Lugares Ofertados</th>
+                                <th class="tg-1x4j">Lugares Ofertados</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -43,11 +44,11 @@
                         <table class="tg">
                             <thead>
                             <tr>
-                                <th class="tg-baqh">Hombres</th>
-                                <th class="tg-baqh">Mujeres</th>
-                                <th class="tg-baqh">Total</th>
-                                <th class="tg-baqh">Con <br> Discapacidad</th>
-                                <th class="tg-baqh">Hablantes de <br> Lenguas Indígenas</th>
+                                <th class="tg-1x4j">Hombres</th>
+                                <th class="tg-1x4j">Mujeres</th>
+                                <th class="tg-1x4j">Total</th>
+                                <th class="tg-1x4j">Con <br> Discapacidad</th>
+                                <th class="tg-1x4j">Hablantes de <br> Lenguas Indígenas</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -65,11 +66,11 @@
                         <table class="tg">
                             <thead>
                             <tr>
-                                <th class="tg-baqh">Hombres</th>
-                                <th class="tg-baqh">Mujeres</th>
-                                <th class="tg-baqh">Total</th>
-                                <th class="tg-baqh">Con <br> Discapacidad</th>
-                                <th class="tg-baqh">Hablantes de <br> Lenguas Indígenas</th>
+                                <th class="tg-1x4j">Hombres</th>
+                                <th class="tg-1x4j">Mujeres</th>
+                                <th class="tg-1x4j">Total</th>
+                                <th class="tg-1x4j">Con <br> Discapacidad</th>
+                                <th class="tg-1x4j">Hablantes de <br> Lenguas Indígenas</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -92,93 +93,93 @@
                         <table class="tg">
                             <tbody>
                             <tr>
-                                <th class="tg-baqh">Aguascalientes</th>
+                                <th class="tg-1x4j">Aguascalientes</th>
                                 <td class="tg-baqh">{{carreraV5[0].AGUASCALIENTES}}</td>
-                                <th class="tg-baqh">Morelos</th>
+                                <th class="tg-1x4j">Morelos</th>
                                 <td class="tg-baqh">{{carreraV5[0].MORELOS}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Baja California</th>
+                                <th class="tg-1x4j">Baja California</th>
                                 <td class="tg-baqh">{{carreraV5[0].BAJA_CALIFORNIA}}</td>
-                                <th class="tg-baqh">Nayarit</th>
+                                <th class="tg-1x4j">Nayarit</th>
                                 <td class="tg-baqh">{{carreraV5[0].NAYARIT}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Baja California Sur</th>
+                                <th class="tg-1x4j">Baja California Sur</th>
                                 <td class="tg-baqh">{{carreraV5[0].BAJA_CALIFORNIA_SUR}}</td>
-                                <th class="tg-baqh">Nuevo León</th>
+                                <th class="tg-1x4j">Nuevo León</th>
                                 <td class="tg-baqh">{{carreraV5[0].NUEVO_LEÓN}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Coahuila</th>
+                                <th class="tg-1x4j">Coahuila</th>
                                 <td class="tg-baqh">{{carreraV5[0].COAHUILA}}</td>
-                                <th class="tg-baqh">Puebla</th>
+                                <th class="tg-1x4j">Puebla</th>
                                 <td class="tg-baqh">{{carreraV5[0].PUEBLA}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Colima</th>
+                                <th class="tg-1x4j">Colima</th>
                                 <td class="tg-baqh">{{carreraV5[0].COLIMA}}</td>
-                                <th class="tg-baqh">Querétaro</th>
+                                <th class="tg-1x4j">Querétaro</th>
                                 <td class="tg-baqh">{{carreraV5[0].QUERÉTARO}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Chiapas</th>
+                                <th class="tg-1x4j">Chiapas</th>
                                 <td class="tg-baqh">{{carreraV5[0].CHIAPAS}}</td>
-                                <th class="tg-baqh">Quintana Roo</th>
+                                <th class="tg-1x4j">Quintana Roo</th>
                                 <td class="tg-baqh">{{carreraV5[0].QUINTANA_ROO}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Chihuahua</th>
+                                <th class="tg-1x4j">Chihuahua</th>
                                 <td class="tg-baqh">{{carreraV5[0].CHIHUAHUA}}</td>
-                                <th class="tg-baqh">San Luis Potosí</th>
+                                <th class="tg-1x4j">San Luis Potosí</th>
                                 <td class="tg-baqh">{{carreraV5[0].SAN_LUIS_POTOSÍ}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Ciudad de México</th>
+                                <th class="tg-1x4j">Ciudad de México</th>
                                 <td class="tg-baqh">{{carreraV5[0].CIUDAD_DE_MÉXICO}}</td>
-                                <th class="tg-baqh">Sinaloa</th>
+                                <th class="tg-1x4j">Sinaloa</th>
                                 <td class="tg-baqh">{{carreraV5[0].SINALOA}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Durango</th>
+                                <th class="tg-1x4j">Durango</th>
                                 <td class="tg-baqh">{{carreraV5[0].DURANGO}}</td>
-                                <th class="tg-baqh">Sonora</th>
+                                <th class="tg-1x4j">Sonora</th>
                                 <td class="tg-baqh">{{carreraV5[0].SONORA}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Guanajuato</th>
+                                <th class="tg-1x4j">Guanajuato</th>
                                 <td class="tg-baqh">{{carreraV5[0].GUANAJUATO}}</td>
-                                <th class="tg-baqh">Tabasco</th>
+                                <th class="tg-1x4j">Tabasco</th>
                                 <td class="tg-baqh">{{carreraV5[0].TABASCO}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Guerrero</th>
+                                <th class="tg-1x4j">Guerrero</th>
                                 <td class="tg-baqh">{{carreraV5[0].GUERRERO}}</td>
-                                <th class="tg-baqh">Tamaulipas</th>
+                                <th class="tg-1x4j">Tamaulipas</th>
                                 <td class="tg-baqh">{{carreraV5[0].TAMAULIPAS}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Hidalgo</th>
+                                <th class="tg-1x4j">Hidalgo</th>
                                 <td class="tg-baqh">{{carreraV5[0].HIDALGO}}</td>
-                                <th class="tg-baqh">Tlaxcala</th>
+                                <th class="tg-1x4j">Tlaxcala</th>
                                 <td class="tg-baqh">{{carreraV5[0].TLAXCALA}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Jalisco</th>
+                                <th class="tg-1x4j">Jalisco</th>
                                 <td class="tg-baqh">{{carreraV5[0].JALISCO}}</td>
-                                <th class="tg-baqh">Veracruz</th>
+                                <th class="tg-1x4j">Veracruz</th>
                                 <td class="tg-baqh">{{carreraV5[0].VERACRUZ}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">México</th>
+                                <th class="tg-1x4j">México</th>
                                 <td class="tg-baqh">{{carreraV5[0].MÉXICO}}</td>
-                                <th class="tg-baqh">Yucatán</th>
+                                <th class="tg-1x4j">Yucatán</th>
                                 <td class="tg-baqh">{{carreraV5[0].YUCATÁN}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Michoacán</th>
+                                <th class="tg-1x4j">Michoacán</th>
                                 <td class="tg-baqh">{{carreraV5[0].MICHOACÁN}}</td>
-                                <th class="tg-baqh">Zacatecas</th>
+                                <th class="tg-1x4j">Zacatecas</th>
                                 <td class="tg-baqh">{{carreraV5[0].ZACATECAS}}</td>
                             </tr>
                             </tbody>
@@ -191,35 +192,35 @@
                         <table class="tg">
                             <tbody>
                             <tr>
-                                <th class="tg-baqh">Estados Unidos</th>
+                                <th class="tg-1x4j">Estados Unidos</th>
                                 <td class="tg-baqh">{{carreraV5[0].ESTADOS_UNIDOS}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Canadá</th>
+                                <th class="tg-1x4j">Canadá</th>
                                 <td class="tg-baqh">{{carreraV5[0].CANADÁ}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Centro América y el Caribe</th>
+                                <th class="tg-1x4j">Centro América y el Caribe</th>
                                 <td class="tg-baqh">{{carreraV5[0].CENTRO_AMÉRICA_Y_EL_CARIBE}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Sudamérica</th>
+                                <th class="tg-1x4j">Sudamérica</th>
                                 <td class="tg-baqh">{{carreraV5[0].SUDAMÉRICA}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">África</th>
+                                <th class="tg-1x4j">África</th>
                                 <td class="tg-baqh">{{carreraV5[0].ÁFRICA}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Asia</th>
+                                <th class="tg-1x4j">Asia</th>
                                 <td class="tg-baqh">{{carreraV5[0].ASIA}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Europa</th>
+                                <th class="tg-1x4j">Europa</th>
                                 <td class="tg-baqh">{{carreraV5[0].EUROPA}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Oceanía</th>
+                                <th class="tg-1x4j">Oceanía</th>
                                 <td class="tg-baqh">{{carreraV5[0].OCEANÍA}}</td>
                             </tr>
                             </tbody>
@@ -228,7 +229,7 @@
                         <table class="tg">
                             <tbody>
                             <tr>
-                                <th class="tg-baqh"><b>Total</b></th>
+                                <th class="tg-1x4j"><b>Total</b></th>
                                 <td class="tg-baqh">{{carreraV5[0].Total}}</td>
                             </tr>
                             </tbody>
@@ -239,24 +240,24 @@
                         <table class="tg">
                             <tbody>
                             <tr>
-                                <th class="tg-baqh">En la entidad</th>
+                                <th class="tg-1x4j">En la entidad</th>
                                 <td class="tg-baqh">{{carreraV6[0].En_la_entidad}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">En otra entidad federativa</th>
+                                <th class="tg-1x4j">En otra entidad federativa</th>
                                 <td class="tg-baqh">{{carreraV6[0].En_otra_entidad_federativa}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Estados Unidos</th>
+                                <th class="tg-1x4j">Estados Unidos</th>
                                 <td class="tg-baqh">{{carreraV6[0].Estados_Unidos}}</td>
                             </tr>
                             <tr>
-                                <th class="tg-baqh">Otro País</th>
+                                <th class="tg-1x4j">Otro País</th>
                                 <td class="tg-baqh">{{carreraV6[0].Otro_país}}</td>
                             </tr>
                             <br>
                             <tr>
-                                <th class="tg-baqh"><b>Total</b></th>
+                                <th class="tg-1x4j"><b>Total</b></th>
                                 <td class="tg-baqh">{{carreraV6[0].Total}}</td>
                             </tr>
                             </tbody>
@@ -270,10 +271,11 @@
 
 <script>
     export default {
-        props: ['campus','carrera'],
+        props: ['campus','carrera', 'progress'],
 
         data() {
             return{
+                mostrar: 0,
                 carreraV1:[],
                 carreraV2: [],
                 carreraV3: [],
@@ -283,6 +285,10 @@
             }
         },
         mounted() {
+            console.log(this.progress)
+            this.mostrar = 0
+            this.$emit('update:progress', 1)
+            console.log(this.progress)
             let ruta1 = 'carreraV1/'
                         axios.get(ruta1).then((response) => {
                         this.carreraV1 = response.data;
@@ -308,6 +314,9 @@
                         axios.get(ruta5).then((response) => {
                         this.carreraV5 = response.data;
                         console.log(this.carreraV5)
+                        this.$emit('update:progress', 0)
+                        this.mostrar = 1
+                        console.log(this.progress)
                         });
             let ruta6 = 'carreraV6/'.concat(this.campus).concat('/').concat(this.carrera)
                         axios.get(ruta6).then((response) => {
@@ -320,6 +329,8 @@
         watch: {
             carrera: function(event) {
                 console.log("CAMBIO CARRERA")
+                this.mostrar = 0
+                this.$emit('update:progress', 1)
                      let ruta1 = 'carreraV1/'
                         axios.get(ruta1).then((response) => {
                         this.carreraV1 = response.data;
@@ -344,6 +355,8 @@
                     let ruta5 = 'carreraV5/'.concat(this.campus).concat('/').concat(this.carrera)
                         axios.get(ruta5).then((response) => {
                         this.carreraV5 = response.data;
+                        this.$emit('update:progress', 0)
+                        this.mostrar = 1
                         console.log(this.carreraV5)
                         });
                     let ruta6 = 'carreraV6/'.concat(this.campus).concat('/').concat(this.carrera)
@@ -355,6 +368,9 @@
             },
         },
         methods: {
+            print(){
+                 this.$htmlToPaper('imprimir');
+            }
 
         },
     }
@@ -365,10 +381,12 @@
     .tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;}
     .tg .tg-rounded  {border-radius: 5px;padding: 20px;border-style:solid;border-width:1px;color:#333}
     .tg td{background-color:#fff;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
-    font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+    font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;width: 200px}
     .tg th{background-color:#f0f0f0;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
     font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
     .tg .tg-baqh{text-align:center;vertical-align:center;}
+    .tg .tg-1x4j{background-color:#005eac;color:#ffffff;text-align:center;vertical-align:center}
+
 
     .wellin {
     min-height: 20px;

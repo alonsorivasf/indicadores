@@ -34,11 +34,13 @@ Vue.use(VueMaterial)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('progress-component', require('./components/ProgressComponent.vue').default);
 Vue.component('inicio-component', require('./components/InicioComponent.vue').default);
 
 //Componentes Carrera
 Vue.component('carrera-component', require('./components/carrera/CarreraComponent.vue').default);
+Vue.component('carrera-seccionII', require('./components/carrera/SeccionIIComponent.vue').default);
+Vue.component('carrera-seccionIII', require('./components/carrera/SeccionIIIComponent.vue').default);
 Vue.component('carrera-seccionV', require('./components/carrera/SeccionVComponent.vue').default);
 Vue.component('carrera-seccionVI', require('./components/carrera/SeccionVIComponent.vue').default);
 
@@ -51,7 +53,21 @@ Vue.component('institucion-component', require('./components/institucion/Institu
 //Componentes Escuela
 Vue.component('escuela-component', require('./components/escuela/EscuelaComponent.vue').default);
 
-
+//Para imprimir en PDF
+import VueHtmlToPaper from 'vue-html-to-paper';
+const options = {
+  name: '_blank',
+  specs: [
+    'fullscreen=yes',
+    'titlebar=yes',
+    'scrollbars=yes'
+  ],
+  styles: [
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+    'https://unpkg.com/kidlat-css/css/kidlat.css'
+  ]
+}
+Vue.use(VueHtmlToPaper, options);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -38,8 +38,15 @@
             </md-field>
         </div>
         </div>
-        <carrera-seccionV v-if="seccion==5" :campus="campus" :carrera="carrera"/>
-        <carrera-seccionVI v-if="seccion==6" :campus="campus" :carrera="carrera"/>
+        <progress-component v-if="progress==1"/>
+        <carrera-seccionII v-if="seccion==2 " :campus="campus" :carrera="carrera" :progress.sync="progress"/>
+        <carrera-seccionIII v-if="seccion==3 " :campus="campus" :carrera="carrera" :progress.sync="progress"/>
+        <carrera-seccionV v-if="seccion==5 " :campus="campus" :carrera="carrera" :progress.sync="progress"/>
+        <carrera-seccionVI v-if="seccion==6 " :campus="campus" :carrera="carrera" :progress.sync="progress"/>
+
+        <div v-if="seccion==1 ">
+            <h4> Información pre-capturada en el sistema de la SEP.</h4>
+        </div>
     </div>
 </template>
 
@@ -47,6 +54,7 @@
     export default {
         data() {
             return{
+                progress:0,
                 campus: null,
                 carrera: '',
                 country: null,
@@ -103,6 +111,7 @@
                     this.seccion= ''
 
             },
+
         },
 
         methods: {
